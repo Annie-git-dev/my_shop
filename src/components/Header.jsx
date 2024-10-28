@@ -2,6 +2,8 @@ import logo from "../assets/logo.png"
 import search from "../assets/search.png"
 
 function Header () {
+    // const searchedUsers = defaultShops.filter(el => el.name.toLowerCase().includes(value.toLowerCase()))
+
     return (
         <>
             <div className="w-full flex flex-wrap justify-around m-5 items-center border-white">

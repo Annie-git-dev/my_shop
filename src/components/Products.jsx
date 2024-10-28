@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import Category from "./Category";
-// import { useLocation } from "react-router-dom";
+import GetAllProducts from "./GetAllProducts";
 
 function Products() {
     const [filteredProducts, setFilteredProducts] = useState([])
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
-    // const location = useLocation();
-    // console.log(location.pathname)
     useEffect(() => {
         getProducts()
     }, [])
-    
+
+    // const productsss = GetAllProducts()
+    // productsss.then(dataJson => {
+    //     let categories = (dataJson.map(elem => elem.category))
+    //     setProducts(dataJson)
+    //     setFilteredProducts(dataJson)
+    //     setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
+    // })
+        
     async function getProducts() {
         const data = await fetch('https://fakestoreapi.com/products')
         let dataJson = await data.json()
@@ -24,7 +30,6 @@ function Products() {
     function getCurrentCategoryItems(currentCategory) {
         let prod = products.filter(el => el.category == currentCategory)
         currentCategory == 'all' ? setFilteredProducts(products) : setFilteredProducts(prod)
-        console.log(currentCategory, prod);
     }
 
     return (
