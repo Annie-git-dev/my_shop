@@ -1,15 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 function Category({ cat, getCurrentCategoryItems }) {
-    const [allCategories, setAllCategories] = useState(true)
-    const [currentCategory, setCurrentCategory] = useState()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [currentCategory, setCurrentCategory] = useState('all')
+    const [searchParams, setSearchParams] = useSearchParams({})
+
+    useEffect(() => {
+        if (searchParams.get('category')) {
+            setCurrentCategory(searchParams.get('category'))
+        }
+        else {
+            setCurrentCategory('all')
+        }
+    }, [searchParams.get('category')])
 
 
-    function setCurrent(id, category) {
-        setAllCategories(false)
-        setCurrentCategory(id)
+
+    function setCurrent(category) {
         getCurrentCategoryItems(category)
         setSearchParams({ category })
     }
@@ -18,15 +25,13 @@ function Category({ cat, getCurrentCategoryItems }) {
         <div className='w-full flex flex-wrap justify-center'>
             <button
                 onClick={() => {
-                    setAllCategories(true)
-                    setCurrentCategory(-1)
                     getCurrentCategoryItems('all')
-                    setSearchParams({ category: "all" })
+                    setSearchParams({})
                 }}
-                className={allCategories ? "underline decoration-solid decoration-[3px] decoration-[#C70039]" : ''}>ALL</button>
+                className={currentCategory === 'all' ? "underline decoration-solid decoration-[3px] decoration-[#C70039]" : ''}>ALL</button>
 
             {cat?.map((category, id) => {
-                return <div key={id} className={currentCategory == id ? "m-5 cursor-pointer underline decoration-solid decoration-[3px] decoration-[#C70039]" : "m-5 cursor-pointer"} onClick={(e) => setCurrent(id, category)}>
+                return <div key={id} className={currentCategory === category ? "m-5 cursor-pointer underline decoration-solid decoration-[3px] decoration-[#C70039]" : "m-5 cursor-pointer"} onClick={(e) => setCurrent(category)}>
                     {category.toUpperCase()}
                 </div>
             })}

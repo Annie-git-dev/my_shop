@@ -1,31 +1,27 @@
 import { useEffect, useState } from "react";
 import Category from "./Category";
-import GetAllProducts from "./GetAllProducts";
 
-function Products() {
+function Products({data}) {
     const [filteredProducts, setFilteredProducts] = useState([])
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
     useEffect(() => {
-        getProducts()
-    }, [])
-
-    // const productsss = GetAllProducts()
-    // productsss.then(dataJson => {
+        if (data) {
+            let categories = (data.map(elem => elem.category))
+            setProducts(data)
+            setFilteredProducts(data)
+            setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
+        }
+    }, [data])
+        
+    // async function getProducts() {
+    //     const data = await fetch('https://fakestoreapi.com/products')
+    //     let dataJson = await data.json()
     //     let categories = (dataJson.map(elem => elem.category))
     //     setProducts(dataJson)
     //     setFilteredProducts(dataJson)
     //     setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
-    // })
-        
-    async function getProducts() {
-        const data = await fetch('https://fakestoreapi.com/products')
-        let dataJson = await data.json()
-        let categories = (dataJson.map(elem => elem.category))
-        setProducts(dataJson)
-        setFilteredProducts(dataJson)
-        setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
-    }
+    // }
 
     function getCurrentCategoryItems(currentCategory) {
         let prod = products.filter(el => el.category == currentCategory)
@@ -34,7 +30,7 @@ function Products() {
 
     return (
         <div className="bg-slate-200">
-            <div className='w-full flex flex-wrap justify-center'>
+            <div className='w-full flex flex-wrap justify-center'>S
                 <Category cat={category} getCurrentCategoryItems={getCurrentCategoryItems}/>
             </div>
             <div className='w-full flex flex-wrap justify-around'>
