@@ -1,8 +1,9 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import Products from './components/Products'
 import { useEffect, useState } from 'react';
+import NoPage from './components/NoPage';
 
 function App() {
   const [data, setData] = useState();
@@ -19,10 +20,14 @@ function App() {
   
   return (
     <BrowserRouter>
-      <div>
+    <Routes>
+          <Route path = "/" element={<Products data={data} />} />
+          <Route path="*" element={<NoPage />} />
+      </Routes>
+      {/* <div>
         <Header data={data} />
         <Products data={data} />
-      </div>
+      </div> */}
     </BrowserRouter>
   )
 }
