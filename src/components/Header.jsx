@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react"
+import { useState } from "react";
 import logo from "../assets/logo.png"
 import search from "../assets/search.png"
+import { Link } from "react-router-dom/dist";
+import { LOGIN_URL } from "../helpers/urls";
 
-function Header({ data }) {
-    const [products, setProducts] = useState(data)
-
-    useEffect(() => {
-        if (data) {
-            setProducts(data)
-        }
-    }, [data])
+function Header({ products, setFilteredProducts }) {
+    // const [isModalOpen, setIsModalOpen] = useState(false)
 
     function searchProduct (value) {
         const searchedProducts = products.filter(el => el.title.toLowerCase().includes(value.toLowerCase()))
-        console.log(searchedProducts);
+        setFilteredProducts(searchedProducts);
     }
+
+    // function openLoginForm () {
+    //     setIsModalOpen(true)
+    // }
+
+    // function closeModal () {
+    //     setIsModalOpen(false);
+    // }
 
     return (
         <>
@@ -30,10 +34,14 @@ function Header({ data }) {
                     <img src={search} alt="Search" className="w-[24px] h-[24px] relative top-[5px] right-[30px] rounded-[50%]" />
                 </div>
                 <div>
-                    <button className="font-bold">
+                    {/* <button 
+                    className="font-bold hover:opacity-70"
+                    onClick={() => openLoginForm()}>
                         Login
-                    </button>
+                    </button> */}
+                    <Link to={LOGIN_URL}>Login</Link>
                 </div>
+                {/* <LoginForm isModalOpen={isModalOpen} closeModal={closeModal} /> */}
             </div>
         </>
     )
