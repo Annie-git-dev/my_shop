@@ -4,6 +4,7 @@ import Products from './components/Products'
 import { useEffect, useState } from 'react';
 import NoPage from './components/NoPage';
 import Pages from './components/Pages';
+import Header from './components/Header';
 
 function App() {
   // const [data, setData] = useState();
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Products data={data} />} />
         <Route path="*" element={<NoPage />} />
       </Routes> */}
+      <Header />
       <Pages />
     </BrowserRouter>
   )

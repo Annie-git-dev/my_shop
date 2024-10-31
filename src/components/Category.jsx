@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom"
 
 function Category({ cat, getCurrentCategoryItems }) {
     const [currentCategory, setCurrentCategory] = useState('all')
-    const [searchParams, setSearchParams] = useSearchParams({})
+    const navigate = useNavigate()
+    // const [searchParams, setSearchParams] = useSearchParams({})
 
-    useEffect(() => {
-        if (searchParams.get('category')) {
-            setCurrentCategory(searchParams.get('category'))
-        }
-        else {
-            setCurrentCategory('all')
-        }
-    }, [searchParams.get('category')])
-
+    // useEffect(() => {
+    //     if (searchParams.get('category')) {
+    //         setCurrentCategory(searchParams.get('category'))
+    //     }
+    //     else {
+    //         setCurrentCategory('all')
+    //     }
+    // }, [searchParams.get('category')])
 
 
     function setCurrent(category) {
         getCurrentCategoryItems(category)
-        setSearchParams({ category })
+        setCurrentCategory(category)
+        // // navigate(`/${category}`)
+        // setSearchParams({ category })
     }
 
     return <>
@@ -26,7 +29,8 @@ function Category({ cat, getCurrentCategoryItems }) {
             <button
                 onClick={() => {
                     getCurrentCategoryItems('all')
-                    setSearchParams({})
+                    setCurrentCategory("all")
+                    // setSearchParams({})
                 }}
                 className={currentCategory === 'all' ? "underline decoration-solid decoration-[3px] decoration-[#C70039]" : ''}>ALL</button>
 

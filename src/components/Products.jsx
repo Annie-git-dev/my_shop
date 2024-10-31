@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Category from "./Category";
-import { Link } from "react-router-dom";
-import Header from "./Header";
+// import Header from "./Header";
 
 function Products({ data }) {
     const [filteredProducts, setFilteredProducts] = useState([])
@@ -9,17 +8,9 @@ function Products({ data }) {
     const [category, setCategory] = useState([])
     const [currentCategory, setCurrentCategory] = useState('all')
 
-    // useEffect(() => {
-    //     if (data) {
-    //         let categories = (data.map(elem => elem.category))
-    //         setProducts(data)
-    //         setFilteredProducts(data)
-    //         setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
-    //     }
-    // }, [data])
     useEffect(() => {
         getProducts()
-    },[])
+    }, [])
 
     async function getProducts() {
         const data = await fetch('https://fakestoreapi.com/products')
@@ -38,25 +29,23 @@ function Products({ data }) {
 
     return (
         <>
-            <Header products={products} setFilteredProducts={setFilteredProducts} />
+            {/* <Header products={products} setFilteredProducts={setFilteredProducts} /> */}
             <div className="bg-slate-200">
                 <div className='w-full flex flex-wrap justify-center'>
                     <Category cat={category} getCurrentCategoryItems={getCurrentCategoryItems} />
                 </div>
-                <Link to={currentCategory}>
-                    <div className='w-full flex flex-wrap justify-around'>
-                        {
-                            filteredProducts?.map((e) => {
-                                // console.log(e)
-                                return <div key={e.id} className="w-[200px] h-[350px] rounded-md">
-                                    <img src={e.image} alt="img" className="w-full h-[200px] rounded-md" />
-                                    <p>{e.title}</p>
-                                    <p>${e.price}</p>
-                                </div>
-                            })
-                        }
-                    </div>
-                </Link>
+                <div className='w-full flex flex-wrap justify-around'>
+                    {
+                        filteredProducts?.map((e) => {
+                            // console.log(e)
+                            return <div key={e.id} className="w-[200px] h-max p-[5px] rounded-md bg-white my-[15px]">
+                                <img src={e.image} alt={e.title} className="w-full h-[200px] rounded-md" />
+                                <p className="whitespace-nowrap">{e.title.length > 20 ? e.title.slice(0, 20) + '...' : e.title}</p>
+                                <p>${e.price}</p>
+                            </div>
+                        })
+                    }
+                </div>
             </div>
         </>
     )
