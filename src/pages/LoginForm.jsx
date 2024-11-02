@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom/dist";
-import { REGISTRATION_URL } from "../helpers/urls";
+import { MAIN_URL, REGISTRATION_URL } from "../helpers/urls";
 import { useRef, useState } from "react";
 
 function LoginForm() {
@@ -17,7 +17,7 @@ function LoginForm() {
       localStorage.setItem("token", "!@Wsfdchhjkj##@tfvjhbjsaj^%$%#%TFC")
       setEmailError("")
       setPasswordError("")
-      navigate("/")
+      navigate(MAIN_URL)
       window.location.reload()
     } else {
       email.trim() === "" ? setEmailError("Email is required") : setEmailError("")
@@ -42,7 +42,7 @@ function LoginForm() {
 
             <div className="flex flex-col justify-between">
               <label htmlFor="password">Password:</label>
-              <input ref={passwordRef} id="password" type="password" className="rounded-3xl border-solid bg-slate-200 border-gray-200 w-[300px] px-[10px] py-[5px]" autoComplete="on" />
+              <input ref={passwordRef} id="password" type="password" className="rounded-3xl border-solid bg-slate-200 border-gray-200 w-[300px] px-[10px] py-[5px]" />
               <p className="text-red-500">{passwordError}</p>
             </div>
 

@@ -1,8 +1,8 @@
 import {ERRPAGE_URL, LOGIN_URL, MAIN_URL, REGISTRATION_URL} from "./urls.js";
-import RegisterForm from "../components/RegisterForm.jsx";
-import LoginForm from "../components/LoginForm.jsx";
-import Products from "../components/Products.jsx";
-import NoPage from "../components/NoPage.jsx";
+import RegisterForm from "../pages/RegisterForm.jsx";
+import LoginForm from "../pages/LoginForm.jsx";
+import Products from "../pages/Products.jsx";
+import NoPage from "../pages/NoPage.jsx";
 
 export const publicRouter = [
   {
@@ -27,5 +27,9 @@ export const privateRouter = [
   {
     path: MAIN_URL,
     element: <Products />
+  },
+  {
+    path: ERRPAGE_URL,
+    element: <NoPage />
   },
 ];
