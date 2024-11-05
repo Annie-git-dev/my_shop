@@ -2,10 +2,10 @@ import logo from "../assets/logo.png"
 import search from "../assets/search.png"
 import { Link, useNavigate, useSearchParams } from "react-router-dom/dist";
 import { LOGIN_URL, MAIN_URL } from "../helpers/urls";
+import { isAuth } from "../helpers/static";
 
 // function Header({ products, setFilteredProducts }) {
 function Header() {
-    const isAuth = localStorage.getItem("token")
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams({})
 

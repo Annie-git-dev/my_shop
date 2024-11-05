@@ -3,3 +3,5 @@ export const datas = async function getProducts() {
     let dataJson = await data.json()
     return await dataJson
 }
+
+export const isAuth = localStorage.getItem("token")

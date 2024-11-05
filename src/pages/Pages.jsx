@@ -1,8 +1,8 @@
 import {useRoutes} from "react-router-dom";
 import {privateRouter, publicRouter} from "../helpers/router"
+import { isAuth } from "../helpers/static";
 
 function Pages(){
-  const isAuth = localStorage.getItem("token")
 
   let element = useRoutes(isAuth ? privateRouter : publicRouter)
 
