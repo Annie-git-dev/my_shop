@@ -2,71 +2,58 @@ import { useEffect, useState } from "react";
 import Category from "../components/Category";
 import { datas } from "../helpers/static";
 import FilteredProducts from "../components/FilteredProducts";
-import { useSearchParams } from "react-router-dom";
 import RangeSlidersComponent from "../components/RangeSlidersComponent";
 import { FaFilter, FaFilterCircleXmark } from "react-icons/fa6";
+import { useSearchParams } from "react-router-dom";
+import RatingComponent from "../components/RatingComponent";
 
 function Products() {
     const [filteredProducts, setFilteredProducts] = useState([])
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
-    const [currentCategory, setCurrentCategory] = useState('all')
-    const [searchParams, setSearchParams] = useSearchParams()
     const [show, setShow] = useState(false)
     const [price, setPrice] = useState(0)
     const [rate, setRate] = useState(0)
+    const [minPrice, setMinPrice] = useState()
+    const [minRate, setMinRate] = useState()
+    const [maxPrice, setMaxPrice] = useState()
+    const [maxRate, setMaxRate] = useState()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         datas().then((data) => {
             setProducts(data)
             setFilteredProducts(data)
+
             let categories = (data.map(elem => elem.category))
             setCategory(categories.filter((value, index) => categories.indexOf(value) === index))
+
+            const maxPrice = Math.max(...data?.map(item => item.price))
+            const maxRate = Math.max(...data?.map(item => item.rating.rate))
+            setPrice(maxPrice)
+            setRate(maxRate)
         })
     }, [])
-    
-    useEffect(() => {
-        const maxPrice = Math.max(...products?.map(item => item.price))
-        const maxRate = Math.max(...products?.map(item => item.rating.rate))
-        setPrice(maxPrice)
-        setRate(maxRate)
-    }, [products])
-
-    useEffect(() => {
-        const value = searchParams.get("value") || ""; // Default to empty string if not found
-        const searchedProducts = products.filter(el =>
-            el.title.toLowerCase().includes(value.toLowerCase())
-        );
-
-        const category = searchParams.get("category") || ""; // Default to empty string if not found
-        const searchedProductsByCategory = products.filter(el => el.category == category)
-
-        if (value) {
-            setFilteredProducts(searchedProducts)
-        } else if (category) {
-            setFilteredProducts(searchedProductsByCategory)
-            setCurrentCategory(category)
-        } else {
-            setFilteredProducts(products)
-            setCurrentCategory("all")
-        }
-    }, [searchParams, products]);
-    
-    function getCurrentCategoryItems(currentCategory) {
-        let prod = products.filter(el => el.category == currentCategory)
-        currentCategory == 'all' ? setFilteredProducts(products) : setFilteredProducts(prod)
-        setCurrentCategory(currentCategory == 'all' ? "" : currentCategory)
-    }
 
     function showFilters() {
         setShow(!show)
+    }
+
+    function changePrice(min, max) {
+        setMinPrice(min)
+        setMaxPrice(max)
+    }
+
+    function changeRate(min, max) {
+        setMinRate(min)
+        setMaxRate(max)
     }
 
     return (
         <>
             <div className="bg-slate-200">
                 <div className='w-full flex flex-wrap justify-center'>
-                    <Category cat={category} getCurrentCategoryItems={getCurrentCategoryItems} />
+                    <Category cat={category} />
                 </div>
                 {
                     price > 0 && <div className="flex align-center">
@@ -76,7 +63,17 @@ function Products() {
                         >
                             {show ? <FaFilterCircleXmark /> : <FaFilter />}
                         </button>
-                        <RangeSlidersComponent show={show} price={price} rate={rate} />
+                        <div className={`flex mb-[20px] ${show ? "" : "hidden"}`}>
+                            <RangeSlidersComponent
+                                price={price}
+                                changePrice={changePrice}
+                            />
+
+                            <RatingComponent
+                                rate={rate}
+                                changeRate={changeRate}
+                            />
+                        </div>
                     </div>
                 }
                 <FilteredProducts filteredProducts={filteredProducts} />

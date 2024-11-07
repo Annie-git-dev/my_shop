@@ -1,8 +1,8 @@
 import logo from "../assets/logo.png"
-import search from "../assets/search.png"
 import { Link, useNavigate, useSearchParams } from "react-router-dom/dist";
 import { LOGIN_URL, MAIN_URL } from "../helpers/urls";
 import { isAuth } from "../helpers/static";
+import { IoIosSearch } from "react-icons/io";
 
 // function Header({ products, setFilteredProducts }) {
 function Header() {
@@ -16,8 +16,6 @@ function Header() {
     }
     function searchProduct (value) {
         setSearchParams(value !== "" ? { value } : "")
-        // const searchedProducts = products.filter(el => el.title.toLowerCase().includes(value.toLowerCase()))
-        // setFilteredProducts(searchedProducts);
     }
 
     return (
@@ -32,7 +30,7 @@ function Header() {
                         placeholder="Search"
                         onChange={e => searchProduct(e.target.value)} 
                     />
-                    <img src={search} alt="Search" className="w-[24px] h-[24px] relative top-[5px] right-[30px] rounded-[50%]" />
+                    <IoIosSearch className="w-[24px] h-[24px] relative top-[5px] right-[30px] rounded-[50%] text-[#424242]" />
                 </div>
                 {isAuth ?
                     <>

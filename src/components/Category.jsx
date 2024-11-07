@@ -2,20 +2,18 @@ import { useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { MAIN_URL } from "../helpers/urls"
 
-function Category({ cat, getCurrentCategoryItems }) {
+function Category({ cat }) {
     const [currentCategory, setCurrentCategory] = useState('all')
     const [searchParams, setSearchParams] = useSearchParams({})
     const navigate = useNavigate()
     const params = searchParams.get('category')
 
     function setCurrent(category) {
-        getCurrentCategoryItems(category)
         setCurrentCategory(category)
         setSearchParams({ category })
     }
 
     function setAll () {
-        getCurrentCategoryItems('all')
         setCurrentCategory("all")
         navigate(MAIN_URL)
     }
