@@ -3,13 +3,6 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import "./css/MultiRangeSlider.css";
 
-// to call inside components
-{/* <MultiRangeSlider
-      min={0}
-      max={1000}
-      onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
-    /> */}  
-
 const MultiRangeSlider = ({ min, max, onChange }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);

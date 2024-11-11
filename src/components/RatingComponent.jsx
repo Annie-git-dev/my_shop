@@ -1,18 +1,35 @@
-import { MdOutlineStarBorderPurple500 } from "react-icons/md";
+import { Checkbox, FormControlLabel, Rating, Typography } from '@mui/material'
+import { useState } from 'react';
 
-function RatingComponent({ rate, changeRate }) {
+function RatingComponent({ rate, changeRate, setAllRatings, checked }) {
+    const [rateIsChanged, setRateIsChanged] = useState(false)
+
     return (
         <>
-            {rate && <div className="mx-[30px]">
-                <span className="text-gray-500 relative bottom-[5px] text-[14px]">Filter by rate</span>
-                <div className="flex relative bottom-[10px]">
-                    <MdOutlineStarBorderPurple500 className="w-[24px] h-[24px] text-[#424242] cursor-pointer mx-[2px]" />
-                    <MdOutlineStarBorderPurple500 className="w-[24px] h-[24px] text-[#424242] cursor-pointer mx-[2px]" />
-                    <MdOutlineStarBorderPurple500 className="w-[24px] h-[24px] text-[#424242] cursor-pointer mx-[2px]" />
-                    <MdOutlineStarBorderPurple500 className="w-[24px] h-[24px] text-[#424242] cursor-pointer mx-[2px]" />
-                    <MdOutlineStarBorderPurple500 className="w-[24px] h-[24px] text-[#424242] cursor-pointer mx-[2px]" />
-                </div>
-            </div>}
+            <div className='flex flex-col'>
+                <span className="text-gray-500 text-[14px]">Filter by rate</span>
+                <Rating
+                    name="simple-controlled"
+                    value={rate}
+                    onChange={(event, newRate) => {
+                        changeRate(newRate)
+                        setRateIsChanged(true)
+                    }}
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            color="default"
+                            checked={checked}
+                            onChange={()=>setAllRatings()}
+                            name="exampleCheckbox"
+                        />
+                    }
+                    label={
+                        <Typography className='text-[#424242]'>Show all ratings</Typography>
+                    }
+                />
+            </div>
         </>
     )
 }
