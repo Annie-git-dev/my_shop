@@ -1,19 +1,14 @@
 import logo from "../assets/logo.png"
-import { Link, useNavigate, useSearchParams } from "react-router-dom/dist";
+import { Link, useSearchParams } from "react-router-dom/dist";
 import { LOGIN_URL, MAIN_URL } from "../helpers/urls";
 import { isAuth } from "../helpers/static";
 import { IoIosSearch } from "react-icons/io";
+import Dashboard from "./Dashboard";
 
 // function Header({ products, setFilteredProducts }) {
 function Header() {
-    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams({})
 
-    function logOutBtn() {
-        localStorage.removeItem("token")
-        navigate(MAIN_URL)
-        window.location.reload()
-    }
     function searchProduct (value) {
         setSearchParams(value !== "" ? { value } : "")
     }
@@ -34,8 +29,7 @@ function Header() {
                 </div>
                 {isAuth ?
                     <>
-                        <div>My account</div>
-                        <button onClick={() => logOutBtn()}>Logout</button>
+                        <Dashboard>My account</Dashboard>
                     </> :
                     <>
                         <Link to={LOGIN_URL}>Login</Link>

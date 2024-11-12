@@ -13,11 +13,12 @@ function LoginForm() {
     e.preventDefault()
     const email = emailRef.current.value
     const password = passwordRef.current.value
+    const userId = 123;
     if (email === "asa@a" && password === "AAss11!!") {
       localStorage.setItem("token", "!@Wsfdchhjkj##@tfvjhbjsaj^%$%#%TFC")
       setEmailError("")
       setPasswordError("")
-      navigate(MAIN_URL)
+      navigate(`/profile/${userId}`);
       window.location.reload()
     } else {
       email.trim() === "" ? setEmailError("Email is required") : setEmailError("")

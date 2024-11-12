@@ -42,7 +42,9 @@ function FilteredProducts({ filteredProducts, checked }) {
             }).map((item) => (
                 <div key={item.id} className="w-[200px] h-max p-[5px] rounded-md bg-white my-[15px]">
                     <img src={item.image} alt={item.title} className="w-full h-[200px] rounded-md" />
-                    <p className="whitespace-nowrap">{item.title.length > 20 ? item.title.slice(0, 20) + '...' : item.title}</p>
+                    <Tooltip title={item.title} arrow>
+                        <p className="whitespace-nowrap">{item.title.length > 20 ? item.title.slice(0, 20) + '...' : item.title}</p>
+                    </Tooltip>
                     <div className="flex justify-between">
                         <p>${item.price}</p>
                         {isAuth && (
