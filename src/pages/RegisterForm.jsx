@@ -1,8 +1,19 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import { useEffect, useState } from "react"
+import { LOGIN_URL } from "../helpers/urls"
+import { useNavigate } from "react-router-dom"
 
 function RegisterForm() {
+    const [users, setUsers] = useState([])
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        setUsers(storedUsers);
+    }, []);
+
     const schema = yup
         .object()
         .shape({
@@ -11,7 +22,10 @@ function RegisterForm() {
                 .min(2, 'Name must be at least 2 characters long'),
             email: yup.string()
                 .required('Email is required')
-                .email('Email must be a valid email address'),
+                .email('Email must be a valid email address')
+                .test('email-exists', 'Email already exists', (value) => {
+                    return !users.some(user => user.email === value);
+                }),
             password: yup.string()
                 .required('Password is required')
                 .min(6, 'Password must be at least 6 characters long')
@@ -32,10 +46,16 @@ function RegisterForm() {
     })
 
     const onSubmit = (data) => {
-        console.log(data);
-        alert("Success registration")
+        const newUser = { id: users.length + 1, name: data.name, email: data.email, password: data.password }; // Example user
+        addUser(newUser)
+        navigate(LOGIN_URL)
     }
 
+    const addUser = (newUser) => {
+        const updatedUsers = [...users, newUser];
+        setUsers(updatedUsers);
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
+    }
 
     return (
         <div className="flex justify-center h-[100vh] bg-slate-200">
@@ -76,8 +96,6 @@ function RegisterForm() {
                 </form>
             </div>
         </div>
-        // }
-        // />
     )
 }
 

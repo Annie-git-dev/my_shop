@@ -1,7 +1,7 @@
 import logo from "../assets/logo.png"
 import { Link, useSearchParams } from "react-router-dom/dist";
 import { LOGIN_URL, MAIN_URL } from "../helpers/urls";
-import { isAuth } from "../helpers/static";
+import { isAuth, userId } from "../helpers/static";
 import { IoIosSearch } from "react-icons/io";
 import Dashboard from "./Dashboard";
 
@@ -16,7 +16,7 @@ function Header() {
     return (
         <>
             <div className="w-full flex flex-wrap justify-around p-5 items-center border-white">
-                <Link to="/" className="w-12 h-12 rounded-md">
+                <Link to={isAuth ? `/user/${userId}` : "/"} className="w-12 h-12 rounded-md">
                     <img src={logo} alt="Logo" />
                 </Link>
                 <div className="flex">

@@ -4,10 +4,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_URL } from '../helpers/urls';
-import { CiLogout, CiEdit } from "react-icons/ci";
+import { CiLogout, CiEdit, CiHome } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa6";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
+import { userId } from '../helpers/static';
 
 export default function Dashboard() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,12 +24,27 @@ export default function Dashboard() {
 
     const logOutBtn = () => {
         localStorage.removeItem("token")
+        localStorage.removeItem("userId")
         navigate(MAIN_URL)
         window.location.reload()
     }
 
-    const editProfile = (id) => {
+    const editProfile = () => {
+        setAnchorEl(null)
+        navigate(`/profile/${userId}`)
+    }
 
+    const getWishList = () => {
+        console.log('Show wish list items');
+    }
+
+    const getBagItems = () => {
+        console.log('Show bag items');
+    }
+
+    const goHomePage = () => {
+        setAnchorEl(null)
+        navigate(`/user/${userId}`)
     }
 
     return (
@@ -53,10 +69,11 @@ export default function Dashboard() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}><MdShoppingCartCheckout />{'\u00A0'}Shopping bag</MenuItem>
-                <MenuItem onClick={handleClose}><FaRegHeart />{'\u00A0'}Wishlist</MenuItem>
-                <MenuItem onClick={() => editProfile()}><CiEdit />{'\u00A0'}Edit profile</MenuItem>
-                <MenuItem onClick={() => logOutBtn()}><CiLogout />{'\u00A0'}Logout</MenuItem>
+                <MenuItem onClick={goHomePage}><CiHome />{'\u00A0'}Home</MenuItem>
+                <MenuItem onClick={getBagItems}><MdShoppingCartCheckout />{'\u00A0'}Shopping bag</MenuItem>
+                <MenuItem onClick={getWishList}><FaRegHeart />{'\u00A0'}Wishlist</MenuItem>
+                <MenuItem onClick={editProfile}><CiEdit />{'\u00A0'}Edit profile</MenuItem>
+                <MenuItem onClick={logOutBtn}><CiLogout />{'\u00A0'}Logout</MenuItem>
             </Menu>
         </div>
     );

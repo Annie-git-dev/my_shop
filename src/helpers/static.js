@@ -5,3 +5,5 @@ export const datas = async function getProducts() {
 }
 
 export const isAuth = localStorage.getItem("token")
+
+export const userId = localStorage.getItem("userId" || '')

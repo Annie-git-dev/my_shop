@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom/dist";
-import { MAIN_URL, REGISTRATION_URL } from "../helpers/urls";
-import { useRef, useState } from "react";
+import { REGISTRATION_URL } from "../helpers/urls";
+import { useEffect, useRef, useState } from "react";
 
 function LoginForm() {
   const emailRef = useRef(null)
@@ -9,26 +9,37 @@ function LoginForm() {
   const [passwordError, setPasswordError] = useState(null)
   const navigate = useNavigate()
 
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+      setUsers(storedUsers);
+  }, []);
+
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const email = emailRef.current.value
-    const password = passwordRef.current.value
-    const userId = 123;
-    if (email === "asa@a" && password === "AAss11!!") {
-      localStorage.setItem("token", "!@Wsfdchhjkj##@tfvjhbjsaj^%$%#%TFC")
-      setEmailError("")
-      setPasswordError("")
-      navigate(`/profile/${userId}`);
-      window.location.reload()
+    e.preventDefault();
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+    const user = storedUsers.find(user => user.email === email && user.password === password);
+
+    if (user) {
+      localStorage.setItem("token", "!@Wsfdchhjkj##@tfvjhbjsaj^%$%#%TFC");
+      localStorage.setItem("userId", user.id);
+      setEmailError("");
+      setPasswordError("");
+      navigate(`/user/${user.id}`);
+      window.location.reload();
     } else {
-      email.trim() === "" ? setEmailError("Email is required") : setEmailError("")
-      password.trim() === "" ? setPasswordError("Password is required") :setPasswordError("")
+      setEmailError(email.trim() === "" ? "Email is required" : "");
+      setPasswordError(password.trim() === "" ? "Password is required" : "");
       if (email.trim() !== "" && password.trim() !== "") {
-        setPasswordError("User data is wrong")
+        setPasswordError("User data is wrong");
       }
     }
-  }
-
+  };
+  
   return (
     <div className="flex justify-center h-[100vh] bg-slate-200">
       <div className="w-max h-max mt-[20px] px-[25px] bg-white border-solid border-gray-200 rounded-3xl">
