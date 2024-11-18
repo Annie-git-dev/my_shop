@@ -20,7 +20,7 @@ function Category({ cat }) {
 
     return (
         <>
-            <div className='w-full flex flex-wrap justify-center'>
+            <div className='w-full flex flex-wrap justify-center mx-[80px]'>
                 <button
                     onClick={() => setAll()}
                     className={params ? " " : "underline decoration-solid decoration-[3px] decoration-[#C70039]"}>ALL</button>

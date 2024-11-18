@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom/dist";
-import { REGISTRATION_URL } from "../helpers/urls";
+import { MAIN_URL, REGISTRATION_URL } from "../helpers/urls";
 import { useEffect, useRef, useState } from "react";
 
 function LoginForm() {
@@ -29,7 +29,7 @@ function LoginForm() {
       localStorage.setItem("userId", user.id);
       setEmailError("");
       setPasswordError("");
-      navigate(`/user/${user.id}`);
+      navigate(MAIN_URL)
       window.location.reload();
     } else {
       setEmailError(email.trim() === "" ? "Email is required" : "");

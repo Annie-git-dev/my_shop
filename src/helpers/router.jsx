@@ -26,7 +26,7 @@ export const publicRouter = [
 
 export const privateRouter = [
   {
-    path: `${MAIN_URL}/user/:id`,
+    path: MAIN_URL,
     element: <Products />
   },
   {

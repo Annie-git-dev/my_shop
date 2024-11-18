@@ -1,7 +1,7 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { MAIN_URL } from '../helpers/urls';
 import { CiLogout, CiEdit, CiHome } from "react-icons/ci";
@@ -11,7 +11,9 @@ import { RxAvatar } from "react-icons/rx";
 import { userId } from '../helpers/static';
 
 export default function Dashboard() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const getUsers = JSON.parse(localStorage.getItem('users'));
+    const [currentUser, setCurrentUser] = useState(getUsers.find(e => e.id === parseInt(userId)));
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
 
@@ -44,7 +46,7 @@ export default function Dashboard() {
 
     const goHomePage = () => {
         setAnchorEl(null)
-        navigate(`/user/${userId}`)
+        navigate(MAIN_URL)
     }
 
     return (
@@ -58,7 +60,7 @@ export default function Dashboard() {
                 onClick={handleClick}
             >
                 <RxAvatar className='w-[30px] h-[30px]'/>{'\u00A0'}
-                My account
+                {currentUser.name}
             </Button>
             <Menu
                 // id="basic-menu"
