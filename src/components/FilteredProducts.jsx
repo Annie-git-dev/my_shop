@@ -5,7 +5,7 @@ import { isAuth } from "../helpers/static";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
-function FilteredProducts({ filteredProducts, checked }) {
+function FilteredProducts({ products }) {
     const [searchParams] = useSearchParams();
     const paramsCategory = searchParams.get("category");
     const paramsValue = searchParams.get("value")?.toLowerCase() || "";
@@ -33,7 +33,7 @@ function FilteredProducts({ filteredProducts, checked }) {
 
     return (
         <div className='w-full flex flex-wrap justify-around'>
-            {filteredProducts?.filter((item) => {
+            {products?.filter((item) => {
                 const categoryMatch = paramsCategory === item.category || !paramsCategory;
                 const valueMatch = item.title.toLowerCase().includes(paramsValue);
                 const rateMatch = paramsRate ? (parseInt(paramsRate) === Math.round(item.rating.rate)) : true;
