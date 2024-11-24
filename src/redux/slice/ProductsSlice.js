@@ -1,9 +1,8 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 const initialState = {
-    products:[],
+    products: [],
     categories: [],
     price: 0,
     rate: 0,
@@ -26,8 +25,13 @@ export const getProducts = createAsyncThunk(
 const productsSlice = createSlice({
     name: 'products',
     initialState,
+    reducers: {
+        changeRating: (state, { payload }) => {
+            state.rate = payload;  // Update rate based on user input
+        },
+    },
     extraReducers: (builder) => {
-        builder.addCase(getProducts.fulfilled, (state, {payload}) => {
+        builder.addCase(getProducts.fulfilled, (state, { payload }) => {
             let category = payload.map(elem => elem.category)
             state.categories = category.filter((value, index) => category.indexOf(value) === index)
             state.price = Math.max(...payload?.map(item => item.price))
@@ -36,13 +40,16 @@ const productsSlice = createSlice({
             state.error = ""
             state.loading = false
         })
-        builder.addCase(getProducts.pending, (state, {payload}) => {
+        builder.addCase(getProducts.pending, (state, { payload }) => {
             state.loading = true
         })
-        builder.addCase(getProducts.rejected, (state, {payload}) => {
+        builder.addCase(getProducts.rejected, (state, { payload }) => {
             state.error = payload
             state.loading = false
         })
     }
 })
+
+export const { changeRating } = productsSlice.actions
+
 export default productsSlice.reducer

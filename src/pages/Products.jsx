@@ -1,36 +1,26 @@
 import { useEffect, useState } from "react";
 import Category from "../components/Category";
-// import { datas } from "../helpers/static";
 import FilteredProducts from "../components/FilteredProducts";
 import RangeSlidersComponent from "../components/RangeSlidersComponent";
 import { FaFilter, FaFilterCircleXmark } from "react-icons/fa6";
 import { useSearchParams } from "react-router-dom";
 import RatingComponent from "../components/RatingComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/slice/ProductsSlice";
+import { getProducts, changeRating } from "../redux/slice/ProductsSlice";
 
 function Products() {
     const [show, setShow] = useState(false)
-    // const [price, setPrice] = useState(0)
-    // const [rate, setRate] = useState(0)
     const [minPrice, setMinPrice] = useState()
     const [maxPrice, setMaxPrice] = useState()
     const [checked, setChecked] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
+
     const dispatch = useDispatch()
-    const { products } = useSelector(state => state.productsReducer)
-    const { categories } = useSelector(state => state.productsReducer)
-    const { price } = useSelector(state => state.productsReducer)
-    const { rate } = useSelector(state => state.productsReducer)
+    const { products, categories, price, rate } = useSelector(state => state.productsReducer)
     
     useEffect(() => {
         dispatch(getProducts())
-
-        // const maxPrice = Math.max(...products?.map(item => item.price))
-        // const maxRate = Math.max(...products?.map(item => item.rating.rate))
-        // setPrice(maxPrice)
-        // setRate(maxRate)
-    }, [])
+    }, [dispatch])
 
 
 
@@ -40,8 +30,7 @@ function Products() {
     }
 
     function changeRate(newRate) {
-        // setRate(newRate)
-        rate = newRate
+        dispatch(changeRating(newRate))
         setChecked(false)
     }
 
@@ -52,8 +41,7 @@ function Products() {
 
     function setAllRatings() {
         setChecked(!checked)
-        // setRate(0)
-        rate = 0
+        dispatch(changeRating(0))
     }
 
     return (

@@ -6,20 +6,23 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MAIN_URL } from "../helpers/urls";
 import { RxAvatar } from "react-icons/rx";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser, editUser } from "../redux/slice/UsersSlise";
 
 function Profile() {
-    const getUsers = JSON.parse(localStorage.getItem('users'));
-    const navigate = useNavigate();
-
-    const [users, setUsers] = useState([]);
-    const [currentUser, setCurrentUser] = useState(getUsers.find(e => e.id === parseInt(userId)));
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { currentUser, loading, error } = useSelector(state => state.usersReducer)
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
-        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-        setUsers(storedUsers);
-        // Set current user again to ensure it's updated after loading users
-        setCurrentUser(storedUsers.find(e => e.id === parseInt(userId)));
-    }, []);
+        dispatch(getUser(userId))
+    }, [dispatch]);
+    useEffect(() => {
+        if (currentUser?.image) {
+            setImagePreview(currentUser.image); // Set the initial image preview
+        }
+    }, [currentUser]);
 
     const schema = yup.object().shape({
         name: yup.string()
@@ -28,23 +31,20 @@ function Profile() {
         email: yup.string()
             .email('Email must be a valid email address')
             .test('email-exists', 'Email already exists', (value) => {
-                return !users.some(user => user.email === value) || value === currentUser.email;
+                return value === currentUser?.email;
             }),
         // image: yup.mixed()
-        //     .test('fileSize', 'File is too large', value => {
-        //         return !value || (value[0]?.size <= 2000000); // Limit to 2MB
-        //     })
         //     .test('fileType', 'Unsupported file format', value => {
         //         return !value || ['image/jpeg', 'image/png', 'image/gif'].includes(value[0]?.type);
         //     }),
     }).required();
 
-    const { register, handleSubmit, setError, formState: { errors } } = useForm({
+    const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
 
     const onSubmit = (data) => {
-        if (data.oldPassword && data.oldPassword !== currentUser.password) {
+        if (data.oldPassword && data.oldPassword !== currentUser?.password) {
             setError('oldPassword', { type: 'manual', message: 'Your old password is incorrect.' });
         }
 
@@ -67,7 +67,7 @@ function Profile() {
         }
 
         if (data.password === '' && data.oldPassword === '' ||
-            data.oldPassword === currentUser.password &&
+            data.oldPassword === currentUser?.password &&
             data.password.trim().length >= 6 &&
             data.password.search(/\d/) !== -1 &&
             data.password.search(/[a-zA-Z]/) !== -1 &&
@@ -77,19 +77,33 @@ function Profile() {
         }
     };
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        console.log(file);
+        
+        if (file && file.size <= 2000000) {
+            clearErrors("image")
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result); // Set the image preview URL
+            };
+            
+            reader.readAsDataURL(file); // Convert to base64 URL
+        } else {
+            setError("image", { type: 'manual', message: 'File is too large.' })
+        }
+    };
+
     const changeData = (data) => {
-        // setPasswordError('Your profile was change successfully')
         const updatedData = {
             ...data,
-            oldPassword: currentUser.password,
-            password: data.password ? data.password : currentUser.password, // Keep old password if new is empty
+            image: imagePreview || '',
+            oldPassword: currentUser?.password,
+            password: data.password ? data.password : currentUser?.password, // Keep old password if new is empty
         };
 
-        const updatedUsers = users.map(user =>
-            user.id === parseInt(userId) ? { ...user, ...updatedData } : user
-        );
-
-        localStorage.setItem('users', JSON.stringify(updatedUsers));
+        const updatedUser = { ...currentUser, ...updatedData }
+        dispatch(editUser({id: userId, updatedUser}))
         navigate(MAIN_URL)
     }
 
@@ -104,16 +118,17 @@ function Profile() {
                             <div className="flex flex-col mb-4">
                                 <label htmlFor="image" className="flex justify-between items-center cursor-pointer">
                                     <span className="text-gray-700">Uptade your profile photo:</span>
-                                    {currentUser?.image ? "Image" : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
+                                    {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
                                 </label>
                                 <input
                                     id="image"
                                     type="file"
                                     accept="image/*"
                                     {...register("image")}
+                                    onChange={handleImageChange}
                                     className="hidden"
                                 />
-                                {/* {errors.image && <p className="text-red-500 max-w-[300px]">{errors.image.message}</p>} */}
+                                {errors.image && <p className="text-red-500 max-w-[300px]">{errors.image.message}</p>}
                             </div>
 
                             <div className="flex flex-col mb-4">

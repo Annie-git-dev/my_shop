@@ -1,18 +1,20 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { LOGIN_URL } from "../helpers/urls"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { getUsers, addUser } from "../redux/slice/UsersSlise";
 
 function RegisterForm() {
-    const [users, setUsers] = useState([])
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { users, loading, error } = useSelector(state => state.usersReducer)
 
     useEffect(() => {
-        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-        setUsers(storedUsers);
-    }, []);
+        dispatch(getUsers())
+    }, [dispatch]);
 
     const schema = yup
         .object()
@@ -48,14 +50,8 @@ function RegisterForm() {
 
     const onSubmit = (data) => {
         const newUser = { id: users.length + 1, name: data.name, email: data.email, password: data.password }; // Example user
-        addUser(newUser)
+        dispatch(addUser(newUser))
         navigate(LOGIN_URL)
-    }
-
-    const addUser = (newUser) => {
-        const updatedUsers = [...users, newUser];
-        setUsers(updatedUsers);
-        localStorage.setItem('users', JSON.stringify(updatedUsers));
     }
 
     return (

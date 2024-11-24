@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom/dist";
 import { MAIN_URL, REGISTRATION_URL } from "../helpers/urls";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { getUsers } from "../redux/slice/UsersSlise";
 
 function LoginForm() {
   const emailRef = useRef(null)
@@ -8,21 +10,26 @@ function LoginForm() {
   const [emailError, setEmailError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { users, loading, error } = useSelector(state => state.usersReducer)
 
-  const [users, setUsers] = useState([])
+  // const [users, setUsers] = useState([])
 
   useEffect(() => {
-      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-      setUsers(storedUsers);
-  }, []);
+      dispatch(getUsers())
+      // const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+      // setUsers(storedUsers);
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-    const user = storedUsers.find(user => user.email === email && user.password === password);
+    // const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+    // const user = storedUsers.find(user => user.email === email && user.password === password);
+    const user = users.find(user => user.email === email && user.password === password);
 
     if (user) {
       localStorage.setItem("token", "!@Wsfdchhjkj##@tfvjhbjsaj^%$%#%TFC");
