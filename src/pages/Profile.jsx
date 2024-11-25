@@ -17,7 +17,7 @@ function Profile() {
 
     useEffect(() => {
         dispatch(getUser(userId))
-    }, [dispatch]);
+    }, []);
     useEffect(() => {
         if (currentUser?.image) {
             setImagePreview(currentUser.image); // Set the initial image preview
@@ -39,9 +39,11 @@ function Profile() {
         //     }),
     }).required();
 
-    const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm({
+    const { register, handleSubmit, setError, clearErrors, formState: { errors, dirtyFields } } = useForm({
         resolver: yupResolver(schema),
     });
+
+    const isDirty = Object.keys(dirtyFields).length > 0;
 
     const onSubmit = (data) => {
         if (data.oldPassword && data.oldPassword !== currentUser?.password) {
@@ -79,7 +81,6 @@ function Profile() {
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);
         
         if (file && file.size <= 2000000) {
             clearErrors("image")
@@ -103,7 +104,9 @@ function Profile() {
         };
 
         const updatedUser = { ...currentUser, ...updatedData }
-        dispatch(editUser({id: userId, updatedUser}))
+        dispatch(editUser({id: userId, updatedUser})).then(()=>{
+            dispatch(getUser(userId))
+        })
         navigate(MAIN_URL)
     }
 
@@ -176,7 +179,7 @@ function Profile() {
                             </div>
 
                             <br />
-                            <button type="submit" className="rounded-3xl bg-[#C70039] w-[300px] px-3 py-2 text-white">Update Profile</button>
+                            <button type="submit" disabled={!isDirty} className={isDirty ? "rounded-3xl bg-[#C70039] w-[300px] px-3 py-2 text-white" : "rounded-3xl cursor-no-drop bg-gray-600 w-[300px] px-3 py-2 text-white"}>Update Profile</button>
                         </div>
                     </form>
                 </div>}

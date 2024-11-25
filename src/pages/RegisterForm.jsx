@@ -14,7 +14,7 @@ function RegisterForm() {
 
     useEffect(() => {
         dispatch(getUsers())
-    }, [dispatch]);
+    }, []);
 
     const schema = yup
         .object()
@@ -49,8 +49,10 @@ function RegisterForm() {
     })
 
     const onSubmit = (data) => {
-        const newUser = { id: users.length + 1, name: data.name, email: data.email, password: data.password }; // Example user
-        dispatch(addUser(newUser))
+        const newUser = { name: data.name, email: data.email, password: data.password }; // Example user
+        dispatch(addUser(newUser)).then(()=>{
+            dispatch(getUsers())
+        })
         navigate(LOGIN_URL)
     }
 

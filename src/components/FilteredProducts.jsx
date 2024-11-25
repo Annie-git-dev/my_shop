@@ -1,9 +1,11 @@
 import { MdShoppingCartCheckout, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { FaStar, FaRegHeart, FaHeart } from "react-icons/fa6";
 import Tooltip from '@mui/material/Tooltip';
-import { isAuth } from "../helpers/static";
+import { isAuth, userId } from "../helpers/static";
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addBagProducts, getBagProducts } from "../redux/slice/BagProductsSlice";
 
 function FilteredProducts({ products }) {
     const [searchParams] = useSearchParams();
@@ -12,15 +14,26 @@ function FilteredProducts({ products }) {
     const paramsRate = searchParams.get("rate");
     const paramsMin = parseInt(searchParams.get("minPrice")) || 0;
     const paramsMax = parseInt(searchParams.get("maxPrice")) || Infinity;
-    const [bagItems, setBagItems] = useState([]);
+    // const [bagItems, setBagItems] = useState([]);
     const [likedItems, setLikedItems] = useState([]);
 
+    const dispatch = useDispatch()
+    const { bagProducts, loading, error } = useSelector(state => state.bagProductsReducer)
+    console.log(bagProducts);
+
+    useEffect(() => {
+        dispatch(getBagProducts())
+    },[])
+
     function addToBag(item) {
-        setBagItems([...bagItems, item])
+        dispatch(addBagProducts([...bagProducts, {item, userId}])).then(()=>{
+            dispatch(getBagProducts(userId))
+        })
+        // setBagItems([...bagItems, item])
     }
 
     function removeFromBag(item) {
-        setBagItems(bagItems.filter(el => el.id !== item.id))
+        // setBagItems(bagItems.filter(el => el.id !== item.id))
     }
 
     function addToLikes(item) {
@@ -49,7 +62,7 @@ function FilteredProducts({ products }) {
                         <p>${item.price}</p>
                         {isAuth && (
                             <div className="flex gap-[5px]">
-                                {!bagItems.some(bagItem => bagItem.id === item.id) ?
+                                {!bagProducts.some(bagItem => bagItem.id === item.id) ?
                                     <Tooltip title="Add to bag" arrow>
                                         <span>
                                             <MdShoppingCartCheckout

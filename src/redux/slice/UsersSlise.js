@@ -45,7 +45,7 @@ export const addUser = createAsyncThunk(
 
 export const editUser = createAsyncThunk(
     'editUser',
-    async ({id, updatedUser}, thunkAPI) => {
+    async ({ id, updatedUser }, thunkAPI) => {
         try {
             const response = await axios.put(`http://localhost:8000/users/${id}`, updatedUser);
             return response.data;
@@ -73,7 +73,6 @@ const usersSlice = createSlice({
             })
 
         builder.addCase(addUser.fulfilled, (state, { payload }) => {
-            state.users.push(payload); // Add the newly created user to the state
             state.error = "";
             state.loading = false;
         })
@@ -99,7 +98,6 @@ const usersSlice = createSlice({
             });
 
         builder.addCase(editUser.fulfilled, (state, { payload }) => {
-            state.users.push(payload); // Add the newly created user to the state
             state.error = "";
             state.loading = false;
         })

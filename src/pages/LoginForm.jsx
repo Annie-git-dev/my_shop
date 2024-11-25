@@ -13,22 +13,16 @@ function LoginForm() {
   const dispatch = useDispatch()
   const { users, loading, error } = useSelector(state => state.usersReducer)
 
-  // const [users, setUsers] = useState([])
 
   useEffect(() => {
       dispatch(getUsers())
-      // const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-      // setUsers(storedUsers);
-  }, [dispatch]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
-    // const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-    // const user = storedUsers.find(user => user.email === email && user.password === password);
     const user = users.find(user => user.email === email && user.password === password);
 
     if (user) {
@@ -36,7 +30,7 @@ function LoginForm() {
       localStorage.setItem("userId", user.id);
       setEmailError("");
       setPasswordError("");
-      navigate(MAIN_URL)
+      navigate(MAIN_URL)      
       window.location.reload();
     } else {
       setEmailError(email.trim() === "" ? "Email is required" : "");

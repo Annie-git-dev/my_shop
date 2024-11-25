@@ -7,6 +7,7 @@ import { MAIN_URL } from '../helpers/urls';
 import { CiLogout, CiEdit, CiHome } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa6";
 import { MdShoppingCartCheckout } from "react-icons/md";
+import { BiPurchaseTag } from "react-icons/bi";
 import { RxAvatar } from "react-icons/rx";
 import { userId } from '../helpers/static';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +20,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         dispatch(getUser(userId))
-    }, [dispatch]);
+    }, []);
     useEffect(() => {
         if (currentUser?.image) {
             setImagePreview(currentUser.image)
@@ -57,6 +58,10 @@ export default function Dashboard() {
         console.log('Show bag items');
     }
 
+    const getPurchases = () => {
+        console.log('Show purchases');
+    }
+
     const goHomePage = () => {
         setAnchorEl(null)
         navigate(MAIN_URL)
@@ -86,6 +91,7 @@ export default function Dashboard() {
                 }}
             >
                 <MenuItem onClick={goHomePage}><CiHome />{'\u00A0'}Home</MenuItem>
+                <MenuItem onClick={getPurchases}><BiPurchaseTag />{'\u00A0'}Purchases</MenuItem>
                 <MenuItem onClick={getBagItems}><MdShoppingCartCheckout />{'\u00A0'}Shopping bag</MenuItem>
                 <MenuItem onClick={getWishList}><FaRegHeart />{'\u00A0'}Wishlist</MenuItem>
                 <MenuItem onClick={editProfile}><CiEdit />{'\u00A0'}Edit profile</MenuItem>

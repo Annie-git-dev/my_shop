@@ -20,7 +20,7 @@ function Products() {
     
     useEffect(() => {
         dispatch(getProducts())
-    }, [dispatch])
+    }, [])
 
 
 
