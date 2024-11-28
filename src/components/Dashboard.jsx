@@ -55,7 +55,8 @@ export default function Dashboard() {
     }
 
     const getBagItems = () => {
-        console.log('Show bag items');
+        setAnchorEl(null)
+        navigate(`bag/${userId}`)
     }
 
     const getPurchases = () => {

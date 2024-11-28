@@ -4,6 +4,8 @@ import LoginForm from "../pages/LoginForm.jsx";
 import Products from "../pages/Products.jsx";
 import NoPage from "../pages/NoPage.jsx";
 import Profile from "../pages/Profile.jsx";
+import ShoppingBag from "../pages/ShoppingBag.jsx";
+import WishList from "../pages/WishList.jsx";
 
 export const publicRouter = [
   {
@@ -32,6 +34,14 @@ export const privateRouter = [
   {
     path: `${MAIN_URL}profile/:id`,
     element: <Profile />
+  },
+  {
+    path: `${MAIN_URL}bag/:id`,
+    element: <ShoppingBag />
+  },
+  {
+    path: `${MAIN_URL}wishlist/:id`,
+    element: <WishList />
   },
   {
     path: ERRPAGE_URL,

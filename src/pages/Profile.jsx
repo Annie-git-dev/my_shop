@@ -177,9 +177,8 @@ function Profile() {
 
                                 {errors.password && <p className="text-red-500 max-w-[300px]">{errors.password.message}</p>}
                             </div>
-
                             <br />
-                            <button type="submit" disabled={!isDirty} className={isDirty ? "rounded-3xl bg-[#C70039] w-[300px] px-3 py-2 text-white" : "rounded-3xl cursor-no-drop bg-gray-600 w-[300px] px-3 py-2 text-white"}>Update Profile</button>
+                            <button type="submit" disabled={!isDirty} className={`rounded-3xl ${isDirty ? 'bg-[#C70039]' : 'cursor-no-drop bg-gray-600'} w-[300px] px-3 py-2 text-white`}>Update Profile</button>
                         </div>
                     </form>
                 </div>}

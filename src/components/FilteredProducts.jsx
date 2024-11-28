@@ -1,11 +1,9 @@
-import { MdShoppingCartCheckout, MdOutlineRemoveShoppingCart } from "react-icons/md";
-import { FaStar, FaRegHeart, FaHeart } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa6";
 import Tooltip from '@mui/material/Tooltip';
-import { isAuth, userId } from "../helpers/static";
+import { isAuth } from "../helpers/static";
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addBagProducts, getBagProducts } from "../redux/slice/BagProductsSlice";
+import BagProducts from "./BagProducts";
+import LikedProducts from "./LikedProducts";
 
 function FilteredProducts({ products }) {
     const [searchParams] = useSearchParams();
@@ -14,35 +12,6 @@ function FilteredProducts({ products }) {
     const paramsRate = searchParams.get("rate");
     const paramsMin = parseInt(searchParams.get("minPrice")) || 0;
     const paramsMax = parseInt(searchParams.get("maxPrice")) || Infinity;
-    // const [bagItems, setBagItems] = useState([]);
-    const [likedItems, setLikedItems] = useState([]);
-
-    const dispatch = useDispatch()
-    const { bagProducts, loading, error } = useSelector(state => state.bagProductsReducer)
-    console.log(bagProducts);
-
-    useEffect(() => {
-        dispatch(getBagProducts())
-    },[])
-
-    function addToBag(item) {
-        dispatch(addBagProducts([...bagProducts, {item, userId}])).then(()=>{
-            dispatch(getBagProducts(userId))
-        })
-        // setBagItems([...bagItems, item])
-    }
-
-    function removeFromBag(item) {
-        // setBagItems(bagItems.filter(el => el.id !== item.id))
-    }
-
-    function addToLikes(item) {
-        setLikedItems([...likedItems, item])
-    }
-
-    function removeFromLikes(item) {
-        setLikedItems(likedItems.filter(el => el.id !== item.id))
-    }
 
     return (
         <div className='w-full flex flex-wrap justify-around'>
@@ -58,46 +27,12 @@ function FilteredProducts({ products }) {
                     <Tooltip title={item.title} arrow>
                         <p className="whitespace-nowrap">{item.title.length > 20 ? item.title.slice(0, 20) + '...' : item.title}</p>
                     </Tooltip>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mt-[10px]">
                         <p>${item.price}</p>
                         {isAuth && (
                             <div className="flex gap-[5px]">
-                                {!bagProducts.some(bagItem => bagItem.id === item.id) ?
-                                    <Tooltip title="Add to bag" arrow>
-                                        <span>
-                                            <MdShoppingCartCheckout
-                                                className="text-[#424242] rounded-md w-[20px] h-[20px] cursor-pointer"
-                                                onClick={() => addToBag(item)}
-                                            />
-                                        </span>
-                                    </Tooltip> :
-                                    <Tooltip title="Remove from bag" arrow>
-                                        <span>
-                                            <MdOutlineRemoveShoppingCart
-                                                className="text-[#424242] rounded-md w-[20px] h-[20px] cursor-pointer"
-                                                onClick={() => removeFromBag(item)}
-                                            />
-                                        </span>
-                                    </Tooltip>
-                                }
-                                {!likedItems.some(likedItem => likedItem.id === item.id) ?
-                                    <Tooltip title="Add to wishlist" arrow>
-                                        <span>
-                                            <FaRegHeart
-                                                className="text-[#424242] rounded-md w-[20px] h-[20px] cursor-pointer"
-                                                onClick={() => addToLikes(item)}
-                                            />
-                                        </span>
-                                    </Tooltip> :
-                                    <Tooltip title="Remove from wishlist" arrow>
-                                        <span>
-                                            <FaHeart
-                                                className="text-[#C70039] rounded-md w-[20px] h-[20px] cursor-pointer"
-                                                onClick={() => removeFromLikes(item)}
-                                            />
-                                        </span>
-                                    </Tooltip>
-                                }
+                                <BagProducts item={item} />
+                                <LikedProducts item={item} />
                             </div>
                         )}
                     </div>

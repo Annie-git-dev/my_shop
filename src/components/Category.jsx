@@ -26,7 +26,7 @@ function Category({ categories }) {
                     className={params ? " " : "underline decoration-solid decoration-[3px] decoration-[#C70039]"}>ALL</button>
 
                 {categories?.map((category, id) => {
-                    return <div key={id} className={params === category ? "m-5 cursor-pointer underline decoration-solid decoration-[3px] decoration-[#C70039]" : "m-5 cursor-pointer"} onClick={(e) => setCurrent(category)}>
+                    return <div key={id} className={`m-5 cursor-pointer ${params === category ? 'underline decoration-solid decoration-[3px] decoration-[#C70039]' : ''}`} onClick={(e) => setCurrent(category)}>
                         {category.toUpperCase()}
                     </div>
                 })}
