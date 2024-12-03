@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBagProducts, removeBagProducts } from "../redux/slice/BagProductsSlice";
 import { userId } from "../helpers/static";
 import { useEffect, useState } from "react";
-import { FaRegTrashCan } from "react-icons/fa6";
 import { Checkbox, FormControlLabel, Typography } from '@mui/material'
+import AlertDialog from "../components/Dialog";
 
 function ShoppingBag() {
 
@@ -82,10 +82,7 @@ function ShoppingBag() {
                 }
                 <div className="text-[#424242] flex items-center mr-[20px]">
                     <span>Remove selected items{'\u00A0'}</span>
-                    <FaRegTrashCan
-                        className={`cursor-${selectedItems.length ? 'pointer' : 'no-drop'} w-[20px] h-[20px]`}
-                        onClick={removeProducts}
-                    />
+                    <AlertDialog selectedItems={selectedItems} removeProducts={removeProducts} />
                 </div>
             </div>
             <hr />
@@ -95,8 +92,6 @@ function ShoppingBag() {
                         <div className="relative grid grid-cols-2 py-[15px] mb-[5px]">
                             <Checkbox
                                 color="default"
-                                // checked={checked}
-                                // onChange={() => setAllRatings()}
                                 name="exampleCheckbox"
                                 checked={selectedItems.includes(e.id)}
                                 onChange={() => handleSelectItem(e.id)}
@@ -115,11 +110,6 @@ function ShoppingBag() {
                                 <p className="font-bold">${e.product.price}</p>
                                 <p>{e.product.title}</p>
                                 <div className="absolute bottom-0 flex justify-around gap-[10px]">
-                                    {/* <div className="flex justify-around rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[200px] px-[10px] py-[5px] text-white">
-                                            <button disabled>-</button>
-                                            1
-                                            <button>+</button>
-                                    </div> */}
                                     <button className="rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[200px] px-[10px] py-[5px] text-white">Buy</button>
                                 </div>
                             </div>
