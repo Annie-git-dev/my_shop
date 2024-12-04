@@ -13,7 +13,7 @@ function ShoppingBag() {
     useEffect(() => {
         dispatch(getBagProducts(userId))
     }, [])
-    
+
     const [selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const isBuyButtonVisible = selectedItems.length > 0;
@@ -52,74 +52,93 @@ function ShoppingBag() {
         });
     }
 
+    const buyItems = (price) => {
+        console.log(price)
+    }
+
     return (
-        <div className="ml-[20px]">
-            <div className="flex justify-between items-center my-[5px]">
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={selectedItems.length === bagProducts.length}
-                            onChange={handleSelectAll}
-                            name="exampleCheckbox"
-                            color="default"
-                            sx={{
-                                '& .MuiSvgIcon-root':
-                                {
-                                    fontSize: 28,
+        <>
+            {loading && <div>Loading...</div>}
+            <div className="ml-[20px]">
+                {bagProducts?.length === 0 ? (
+                    <Typography className="text-lg text-[#424242] text-bold text-center">Your bag is empty</Typography>
+                ) : (
+                    <>
+                        <div className="flex justify-between items-center my-[5px]">
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={selectedItems.length === bagProducts.length}
+                                        onChange={handleSelectAll}
+                                        name="exampleCheckbox"
+                                        color="default"
+                                        sx={{
+                                            '& .MuiSvgIcon-root':
+                                            {
+                                                fontSize: 28,
+                                            }
+                                        }}
+                                    />
                                 }
-                            }}
-                        />
-                    }
-                    label={
-                        <Typography className='text-[#424242]'>Select all {bagProducts?.length} items</Typography>
-                    }
-                />
-                {
-                    isBuyButtonVisible &&
-                    <button className="rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[200px] px-[10px] py-[5px] text-white">
-                        Buy ({selectedItems.length} pcs, {totalPrice}$)
-                    </button>
-                }
-                <div className="text-[#424242] flex items-center mr-[20px]">
-                    <span>Remove selected items{'\u00A0'}</span>
-                    <AlertDialog selectedItems={selectedItems} removeProducts={removeProducts} />
-                </div>
-            </div>
-            <hr />
-            {
-                bagProducts?.map(e => (
-                    <div key={e.id}>
-                        <div className="relative grid grid-cols-2 py-[15px] mb-[5px]">
-                            <Checkbox
-                                color="default"
-                                name="exampleCheckbox"
-                                checked={selectedItems.includes(e.id)}
-                                onChange={() => handleSelectItem(e.id)}
-                                sx={{
-                                    position: 'absolute',
-                                    top: "15px",
-                                    right: "40px",
-                                    width: '20px',
-                                    height: '20px',
-                                }}
+                                label={
+                                    <Typography className='text-[#424242]'>Select all {bagProducts?.length} items</Typography>
+                                }
                             />
-                            <div className="w-[200px] h-max p-[5px] rounded-md bg-slate-200">
-                                <img src={e.product.image} alt={e.product.title} className="w-full h-[200px] rounded-md" />
-                            </div>
-                            <div className="relative">
-                                <p className="font-bold">${e.product.price}</p>
-                                <p>{e.product.title}</p>
-                                <div className="absolute bottom-0 flex justify-around gap-[10px]">
-                                    <button className="rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[200px] px-[10px] py-[5px] text-white">Buy</button>
-                                </div>
+                            {
+                                isBuyButtonVisible &&
+                                <button
+                                    className="rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[200px] px-[10px] py-[5px] text-white"
+                                    onClick={() => buyItems(totalPrice)}>
+                                    Buy ({selectedItems.length} pcs, {totalPrice}$)
+                                </button>
+                            }
+                            <div className="text-[#424242] flex items-center mr-[20px]">
+                                <span>Remove selected items{'\u00A0'}</span>
+                                <AlertDialog selectedItems={selectedItems} removeProducts={removeProducts} />
                             </div>
                         </div>
-                        <hr className="border-t border-slate-200" />
-                    </div>
-                ))
-            }
-        </div>
-    )
+                        <hr />
+                        {
+                            bagProducts?.map(e => (
+                                <div key={e.id}>
+                                    <div className="relative grid grid-cols-2 py-[15px] mb-[5px]">
+                                        <Checkbox
+                                            color="default"
+                                            name="exampleCheckbox"
+                                            checked={selectedItems.includes(e.id)}
+                                            onChange={() => handleSelectItem(e.id)}
+                                            sx={{
+                                                position: 'absolute',
+                                                top: "15px",
+                                                right: "40px",
+                                                width: '20px',
+                                                height: '20px',
+                                            }}
+                                        />
+                                        <div className="w-[200px] h-max p-[5px] rounded-md bg-slate-200">
+                                            <img src={e.product.image} alt={e.product.title} className="w-full h-[200px] rounded-md" />
+                                        </div>
+                                        <div className="relative">
+                                            <p className="font-bold">${e.product.price}</p>
+                                            <p>{e.product.title}</p>
+                                            <div className="absolute bottom-0 flex justify-around gap-[10px]">
+                                                <button
+                                                    className={`rounded-3xl border-solid w-[200px] px-[10px] py-[5px] text-white ${isBuyButtonVisible ? 'bg-[#C70039] bg-opacity-80 cursor-not-allowed' : 'bg-[#C70039] border-gray-200'}`}
+                                                    disabled={isBuyButtonVisible}
+                                                    onClick={() => buyItems(e.product.price)}>
+                                                    Buy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr className="border-t border-slate-200" />
+                                </div>
+                            ))}
+                    </>
+                )}
+            </div>
+        </>
+    );
 }
 
 export default ShoppingBag

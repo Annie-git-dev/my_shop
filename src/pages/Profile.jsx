@@ -8,6 +8,7 @@ import { MAIN_URL } from "../helpers/urls";
 import { RxAvatar } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, editUser } from "../redux/slice/UsersSlise";
+import Tooltip from '@mui/material/Tooltip';
 
 function Profile() {
     const navigate = useNavigate()
@@ -33,17 +34,13 @@ function Profile() {
             .test('email-exists', 'Email already exists', (value) => {
                 return value === currentUser?.email;
             }),
-        // image: yup.mixed()
-        //     .test('fileType', 'Unsupported file format', value => {
-        //         return !value || ['image/jpeg', 'image/png', 'image/gif'].includes(value[0]?.type);
-        //     }),
     }).required();
 
     const { register, handleSubmit, setError, clearErrors, formState: { errors, dirtyFields } } = useForm({
         resolver: yupResolver(schema),
     });
 
-    const isDirty = Object.keys(dirtyFields).length > 0;
+    const isDirty = Object.keys(dirtyFields).length > 0 || imagePreview !== currentUser?.image;
 
     const onSubmit = (data) => {
         if (data.oldPassword && data.oldPassword !== currentUser?.password) {
@@ -77,18 +74,19 @@ function Profile() {
             changeData(data)
             window.location.reload()
         }
+
     };
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        
+
         if (file && file.size <= 2000000) {
             clearErrors("image")
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result); // Set the image preview URL
             };
-            
+
             reader.readAsDataURL(file); // Convert to base64 URL
         } else {
             setError("image", { type: 'manual', message: 'File is too large.' })
@@ -104,7 +102,7 @@ function Profile() {
         };
 
         const updatedUser = { ...currentUser, ...updatedData }
-        dispatch(editUser({id: userId, updatedUser})).then(()=>{
+        dispatch(editUser({ id: userId, updatedUser })).then(() => {
             dispatch(getUser(userId))
         })
         navigate(MAIN_URL)
@@ -118,7 +116,7 @@ function Profile() {
                         <div className="mt-3 font-bold text-lg">Edit Profile</div>
                         <hr />
                         <div className="my-6">
-                            <div className="flex flex-col mb-4">
+                            <div className="flex flex-col mb-4 relative">
                                 <label htmlFor="image" className="flex justify-between items-center cursor-pointer">
                                     <span className="text-gray-700">Uptade your profile photo:</span>
                                     {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
@@ -131,6 +129,9 @@ function Profile() {
                                     onChange={handleImageChange}
                                     className="hidden"
                                 />
+                                {imagePreview && <Tooltip title="Remove profile image" arrow>
+                                    <span className="absolute top-0 right-[-10px] text-[#C70039] cursor-pointer" onClick={() => setImagePreview('')}>x</span>
+                                </Tooltip>}
                                 {errors.image && <p className="text-red-500 max-w-[300px]">{errors.image.message}</p>}
                             </div>
 

@@ -51,7 +51,8 @@ export default function Dashboard() {
     }
 
     const getWishList = () => {
-        console.log('Show wish list items');
+        setAnchorEl(null)
+        navigate(`wishlist/${userId}`)
     }
 
     const getBagItems = () => {

@@ -64,6 +64,7 @@ function Products() {
                                 />
 
                                 <RatingComponent
+                                    text="Filter by rate"
                                     rate={rate}
                                     changeRate={changeRate}
                                     setAllRatings={setAllRatings}
