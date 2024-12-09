@@ -7,17 +7,18 @@ import { useNavigate } from "react-router-dom";
 import { MAIN_URL } from "../helpers/urls";
 import { RxAvatar } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, editUser } from "../redux/slice/UsersSlise";
+import { getUser, editUser, getUsers } from "../redux/slice/UsersSlise";
 import Tooltip from '@mui/material/Tooltip';
 
 function Profile() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { currentUser, loading, error } = useSelector(state => state.usersReducer)
+    const { users, currentUser, loading, error } = useSelector(state => state.usersReducer)
     const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         dispatch(getUser(userId))
+        dispatch(getUsers())
     }, []);
     useEffect(() => {
         if (currentUser?.image) {
@@ -32,7 +33,7 @@ function Profile() {
         email: yup.string()
             .email('Email must be a valid email address')
             .test('email-exists', 'Email already exists', (value) => {
-                return value === currentUser?.email;
+                return !users.some(user => user.email === value);
             }),
     }).required();
 
@@ -109,7 +110,7 @@ function Profile() {
     }
 
     return (
-        <div className="flex justify-center h-screen bg-slate-200">
+        <div className="flex justify-center">
             {!currentUser ? <>Loading...</> :
                 <div className="w-max h-max mt-5 px-6 bg-white border border-gray-200 rounded-3xl">
                     <form onSubmit={handleSubmit(onSubmit)}>

@@ -25,11 +25,11 @@ export default function BasicModal({ item }) {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <div className='flex justify-center'>
       <img
         src={item.image}
         alt={item.title}
-        className="w-full h-[200px] rounded-md cursor-pointer"
+        className="h-[200px] rounded-md cursor-pointer"
         onClick={handleOpen} />
       <Modal
         open={open}
@@ -41,7 +41,7 @@ export default function BasicModal({ item }) {
           <img
             src={item.image}
             alt={item.title}
-            className='h-[150px]'
+            className='h-[200px]'
           />
           <div className='flex flex-col ml-[20px]'>
             <div>{item.title}</div>

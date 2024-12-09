@@ -10,7 +10,7 @@ function FilteredProducts({ products }) {
     const paramsMax = parseInt(searchParams.get("maxPrice")) || Infinity;
 
     return (
-        <div className='w-full flex flex-wrap justify-around'>
+        <div className='w-full flex flex-wrap justify-around gap-5 p-[20px]'>
             {products?.filter((item) => {
                 const categoryMatch = paramsCategory === item.category || !paramsCategory;
                 const valueMatch = item.title.toLowerCase().includes(paramsValue);

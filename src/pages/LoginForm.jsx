@@ -42,7 +42,7 @@ function LoginForm() {
   };
   
   return (
-    <div className="flex justify-center h-[100vh] bg-slate-200">
+    <div className="flex justify-center">
       <div className="w-max h-max mt-[20px] px-[25px] bg-white border-solid border-gray-200 rounded-3xl">
           <div className="mt-[10px] font-bold text-lg">Login</div>
           <hr/>

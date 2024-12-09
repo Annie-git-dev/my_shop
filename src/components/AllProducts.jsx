@@ -8,7 +8,7 @@ import BasicModal from "./BasicModal";
 function AllProducts({ item }) {
     return (
         <>
-            <div key={item.id} className="w-[200px] h-max p-[5px] rounded-md bg-white my-[15px]">
+            <div key={item.id} className="w-[300px] h-max p-[5px] rounded-md bg-white my-[15px]">
                 <BasicModal item={item} />
                 <Tooltip title={item.title} arrow>
                     <p className="whitespace-nowrap">{item.title.length > 20 ? item.title.slice(0, 20) + '...' : item.title}</p>

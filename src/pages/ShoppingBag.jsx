@@ -97,7 +97,7 @@ function ShoppingBag() {
                                 <AlertDialog selectedItems={selectedItems} removeProducts={removeProducts} />
                             </div>
                         </div>
-                        <hr />
+                        <hr className="border-t border-[#424242] opacity-20" />
                         {
                             bagProducts?.map(e => (
                                 <div key={e.id}>
@@ -115,15 +115,15 @@ function ShoppingBag() {
                                                 height: '20px',
                                             }}
                                         />
-                                        <div className="w-[200px] h-max p-[5px] rounded-md bg-slate-200">
-                                            <img src={e.product.image} alt={e.product.title} className="w-full h-[200px] rounded-md" />
+                                        <div className="w-[300px] h-max p-[5px] rounded-md border border-slate-200 bg-white flex justify-center">
+                                            <img src={e.product.image} alt={e.product.title} className="h-[200px] rounded-md" />
                                         </div>
                                         <div className="relative">
                                             <p className="font-bold">${e.product.price}</p>
                                             <p>{e.product.title}</p>
                                             <div className="absolute bottom-0 flex justify-around gap-[10px]">
                                                 <button
-                                                    className={`rounded-3xl border-solid w-[200px] px-[10px] py-[5px] text-white ${isBuyButtonVisible ? 'bg-[#C70039] bg-opacity-80 cursor-not-allowed' : 'bg-[#C70039] border-gray-200'}`}
+                                                    className={`rounded-3xl border-solid w-[200px] px-[10px] py-[5px] text-white ${isBuyButtonVisible ? 'bg-[#C70039] bg-gray-600 cursor-not-allowed' : 'bg-[#C70039] border-gray-200'}`}
                                                     disabled={isBuyButtonVisible}
                                                     onClick={() => buyItems(e.product.price)}>
                                                     Buy
@@ -131,7 +131,7 @@ function ShoppingBag() {
                                             </div>
                                         </div>
                                     </div>
-                                    <hr className="border-t border-slate-200" />
+                                    <hr className="border-t border-[#424242] opacity-20" />
                                 </div>
                             ))}
                     </>

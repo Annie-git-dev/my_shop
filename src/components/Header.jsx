@@ -14,7 +14,7 @@ function Header() {
 
     return (
         <>
-            <div className="w-full flex flex-wrap justify-around p-5 items-center border-white">
+            <div className="w-full flex flex-wrap justify-around p-5 items-center">
                 <Link to={MAIN_URL} className="w-[70px] h-[70px] rounded-md">
                     <img src={logo} alt="Logo" />
                 </Link>

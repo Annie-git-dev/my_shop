@@ -7,9 +7,13 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Pages />
-      <Footer />
+      <div className="flex flex-col min-h-screen">
+          <Header />
+        <div className="flex-1 bg-slate-200">
+          <Pages />
+        </div>
+        <Footer />
+      </div>
     </>
   )
 }

@@ -14,7 +14,7 @@ function WishList() {
     }, [])
 
     return (
-        <div className="flex flex-wrap justify-around">
+        <div className="flex flex-wrap justify-around bg-slate-200 gap-5 p-[20px]">
             {loading && <div>Loading...</div>}
             {likedProducts && likedProducts.map(e => {
                 return <div key={e.id}>
