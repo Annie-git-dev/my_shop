@@ -8,7 +8,7 @@ import AlertDialog from "../components/Dialog";
 function ShoppingBag() {
 
     const dispatch = useDispatch()
-    const { bagProducts, loading, error } = useSelector(state => state.bagProductsReducer)
+    const { bagProducts, loading } = useSelector(state => state.bagProductsReducer)
 
     useEffect(() => {
         dispatch(getBagProducts(userId))

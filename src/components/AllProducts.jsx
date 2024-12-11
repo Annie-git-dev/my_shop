@@ -11,7 +11,7 @@ function AllProducts({ item }) {
             <div key={item.id} className="w-[300px] h-max p-[5px] rounded-md bg-white my-[15px]">
                 <BasicModal item={item} />
                 <Tooltip title={item.title} arrow>
-                    <p className="whitespace-nowrap">{item.title.length > 20 ? item.title.slice(0, 20) + '...' : item.title}</p>
+                    <p className="whitespace-nowrap">{item.title.length > 30 ? item.title.slice(0, 30) + '...' : item.title}</p>
                 </Tooltip>
                 <div className="flex justify-between mt-[10px]">
                     <p>${item.price}</p>
@@ -23,7 +23,7 @@ function AllProducts({ item }) {
                     )}
                 </div>
                 <div className="flex">
-                    <FaStar className="mt-[5px] text-yellow-500" />{'\u00A0' + item.rating.rate}
+                    <FaStar className="mt-[5px] text-yellow-500" />{'\u00A0' + parseFloat(item.rating.rate).toFixed(2)}
                 </div>
             </div>
         </>

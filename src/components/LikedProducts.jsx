@@ -1,35 +1,43 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addLikedProducts, getLikedProducts, removeLikedProducts } from "../redux/slice/LikedProductsSlice";
 import { userId } from "../helpers/static";
 import { useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import Tooltip from '@mui/material/Tooltip';
+import { getProducts, updateProduct } from "../redux/slice/ProductsSlice";
 
 function LikedProducts({ item }) {
 
     const dispatch = useDispatch()
-    const { likedProducts, loading, error } = useSelector(state => state.likedProductsReducer)
+    const { products } = useSelector(state => state.productsReducer)
 
     useEffect(() => {
-        dispatch(getLikedProducts(userId))
+        dispatch(getProducts())
     }, [])
 
     function addToLikes(item) {
-        dispatch(addLikedProducts({ userId, product: item })).then(() => {
-            dispatch(getLikedProducts(userId))
+        const updatedProduct = {
+            id: item.id,
+            liked: [...item.liked || [], userId ]
+        }
+        dispatch(updateProduct(updatedProduct)).then(() => {
+            dispatch(getProducts())
         })
     }
 
     function removeFromLikes(item) {
-        const product = likedProducts.find(e => e.product.id === item.id)
-        dispatch(removeLikedProducts(product.id)).then(() => {
-            dispatch(getLikedProducts(userId))
-        });
+        const updatedProduct = {
+            id: item.id,
+            liked: (item.liked || []).filter(id => id !== userId)
+        };
+    
+        dispatch(updateProduct(updatedProduct)).then(() => {
+            dispatch(getProducts())
+        })
     }
 
     return (
         <>
-            {!likedProducts.some(e => e.product.id === item.id) ?
+            {!products?.some(e => e.id === item.id && e.liked?.includes(userId)) ?
                 <Tooltip title="Add to wishlist" arrow>
                     <span>
                         <FaRegHeart

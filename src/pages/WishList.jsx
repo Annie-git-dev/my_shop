@@ -1,25 +1,26 @@
 import { useDispatch, useSelector } from "react-redux"
-import { getLikedProducts, removeLikedProducts } from "../redux/slice/LikedProductsSlice";
 import { useEffect } from "react";
 import { userId } from "../helpers/static";
 import FilteredProducts from "../components/AllProducts"
+import { getProducts } from "../redux/slice/ProductsSlice";
 
 function WishList() {
 
     const dispatch = useDispatch()
-    const { likedProducts, loading, error } = useSelector(state => state.likedProductsReducer)
+    const { products, loading } = useSelector(state => state.productsReducer)
 
     useEffect(() => {
-        dispatch(getLikedProducts(userId))
+        dispatch(getProducts())
     }, [])
 
     return (
         <div className="flex flex-wrap justify-around bg-slate-200 gap-5 p-[20px]">
             {loading && <div>Loading...</div>}
-            {likedProducts && likedProducts.map(e => {
-                return <div key={e.id}>
-                    <FilteredProducts item={e.product} />
-                </div>
+            {products && products.map(e => {
+                if (e.liked?.includes(userId))
+                    return <div key={e.id}>
+                        <FilteredProducts item={e} />
+                    </div>
             })}
         </div>
     )
