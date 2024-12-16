@@ -11,7 +11,7 @@ function LoginForm() {
   const [passwordError, setPasswordError] = useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { users, loading, error } = useSelector(state => state.usersReducer)
+  const { users } = useSelector(state => state.usersReducer)
 
 
   useEffect(() => {

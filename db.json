@@ -48,9 +48,15 @@
       "category": "men's clothing",
       "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
       "rating": {
-        "rate": 4.9625,
+        "rate": 2.5,
         "count": 120
-      }
+      },
+      "rated": [
+        "2"
+      ],
+      "liked": [
+        "2"
+      ]
     },
     {
       "id": "2",
@@ -60,11 +66,15 @@
       "category": "men's clothing",
       "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
       "rating": {
-        "rate": 4.997909545665243,
+        "rate": 4.749477386416311,
         "count": 259
       },
       "liked": [
         "4"
+      ],
+      "rated": [
+        "2",
+        "1"
       ]
     },
     {
@@ -75,17 +85,16 @@
       "category": "men's clothing",
       "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
       "rating": {
-        "rate": 4.984368896484375,
+        "rate": 3.9921844482421873,
         "count": 500
       },
       "rated": [
         "430d",
         "2",
-        "4"
-      ],
-      "liked": [
+        "4",
         "1"
-      ]
+      ],
+      "liked": []
     },
     {
       "id": "4",
@@ -131,14 +140,15 @@
       "category": "jewelery",
       "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
       "rating": {
-        "rate": 4.8265625,
+        "rate": 4.91328125,
         "count": 70
       },
       "liked": [
         "1"
       ],
       "rated": [
-        "1"
+        "1",
+        "2"
       ]
     },
     {
@@ -254,9 +264,12 @@
       "category": "women's clothing",
       "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
       "rating": {
-        "rate": 2.6,
+        "rate": 3.8,
         "count": 235
-      }
+      },
+      "rated": [
+        "1"
+      ]
     },
     {
       "id": "16",
@@ -266,9 +279,13 @@
       "category": "women's clothing",
       "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
       "rating": {
-        "rate": 2.9,
+        "rate": 3.95,
         "count": 340
-      }
+      },
+      "liked": [],
+      "rated": [
+        "1"
+      ]
     },
     {
       "id": "17",
@@ -302,9 +319,15 @@
       "category": "women's clothing",
       "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
       "rating": {
-        "rate": 4.625,
+        "rate": 4.8125,
         "count": 146
-      }
+      },
+      "liked": [
+        "1"
+      ],
+      "rated": [
+        "1"
+      ]
     },
     {
       "id": "20",
@@ -349,22 +372,6 @@
         "rating": {
           "rate": 4.35,
           "count": 500
-        }
-      }
-    },
-    {
-      "id": "4dd7",
-      "userId": "1",
-      "product": {
-        "id": "2",
-        "title": "Mens Casual Premium Slim Fit T-Shirts ",
-        "price": 22.3,
-        "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
-        "category": "men's clothing",
-        "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-        "rating": {
-          "rate": 4.64951171875,
-          "count": 259
         }
       }
     },
@@ -415,6 +422,77 @@
           "rate": 3.47861328125,
           "count": 430
         }
+      }
+    },
+    {
+      "id": "5761",
+      "userId": "2",
+      "product": {
+        "id": "3",
+        "title": "Mens Cotton Jacket",
+        "price": 55.99,
+        "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+        "rating": {
+          "rate": 4.984368896484375,
+          "count": 500
+        },
+        "rated": [
+          "430d",
+          "2",
+          "4"
+        ],
+        "liked": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "85bd",
+      "userId": "1",
+      "product": {
+        "id": "3",
+        "title": "Mens Cotton Jacket",
+        "price": 55.99,
+        "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+        "rating": {
+          "rate": 3.9921844482421873,
+          "count": 500
+        },
+        "rated": [
+          "430d",
+          "2",
+          "4",
+          "1"
+        ],
+        "liked": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "d89d",
+      "userId": "1",
+      "product": {
+        "id": "8",
+        "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
+        "price": 10.99,
+        "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+          "rate": 4.465625,
+          "count": 100
+        },
+        "liked": [
+          "4"
+        ],
+        "rated": [
+          "4"
+        ]
       }
     }
   ]

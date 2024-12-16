@@ -6,7 +6,7 @@ import { MdShoppingCartCheckout, MdOutlineRemoveShoppingCart } from "react-icons
 import Tooltip from '@mui/material/Tooltip';
 
 function BagProducts({ item }) {
-
+    
     const dispatch = useDispatch()
     const { bagProducts, loading, error } = useSelector(state => state.bagProductsReducer)
 

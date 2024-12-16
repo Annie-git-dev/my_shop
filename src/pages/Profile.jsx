@@ -22,7 +22,7 @@ function Profile() {
     }, []);
     useEffect(() => {
         if (currentUser?.image) {
-            setImagePreview(currentUser.image); // Set the initial image preview
+            setImagePreview(currentUser.image);
         }
     }, [currentUser]);
 

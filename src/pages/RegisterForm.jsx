@@ -49,7 +49,7 @@ function RegisterForm() {
     })
 
     const onSubmit = (data) => {
-        const newUser = { name: data.name, email: data.email, password: data.password }; // Example user
+        const newUser = { name: data.name, email: data.email, password: data.password };
         dispatch(addUser(newUser)).then(()=>{
             dispatch(getUsers())
         })

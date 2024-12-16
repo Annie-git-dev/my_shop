@@ -5,7 +5,7 @@ import BagProducts from './BagProducts'
 import LikedProducts from './LikedProducts'
 import RatingComponent from './RatingComponent'
 import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProducts, updateProduct } from "../redux/slice/ProductsSlice";
 import { userId } from '../helpers/static';
 import Alert from '@mui/material/Alert';
@@ -27,7 +27,6 @@ export default function BasicModal({ item }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { products } = useSelector(state => state.productsReducer)
   const dispatch = useDispatch()
   const [showAlert, setShowAlert] = useState(false);
 

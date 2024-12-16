@@ -6,7 +6,7 @@ import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 import AlertDialog from "../components/Dialog";
 
 function ShoppingBag() {
-
+    
     const dispatch = useDispatch()
     const { bagProducts, loading } = useSelector(state => state.bagProductsReducer)
 
@@ -61,7 +61,7 @@ function ShoppingBag() {
             {loading && <div>Loading...</div>}
             <div className="ml-[20px]">
                 {bagProducts?.length === 0 ? (
-                    <Typography className="text-lg text-[#424242] text-bold text-center">Your bag is empty</Typography>
+                    <Typography className="text-lg text-[#424242] text-bold text-center p-[20px]">Your bag is empty</Typography>
                 ) : (
                     <>
                         <div className="flex justify-between items-center my-[5px]">
