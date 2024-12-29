@@ -81,7 +81,7 @@ export default function Dashboard() {
             >
                 {/* {currentUser?.name} */}
                 {/* {'\u00A0'} */}
-                {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
+                {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full object-cover" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
             </Button>
             <Menu
                 // id="basic-menu"

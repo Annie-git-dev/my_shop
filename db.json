@@ -104,14 +104,15 @@
       "category": "men's clothing",
       "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
       "rating": {
-        "rate": 4.239306640625,
+        "rate": 4.6196533203125,
         "count": 430
       },
       "liked": [
         "4"
       ],
       "rated": [
-        "4"
+        "4",
+        "1"
       ]
     },
     {

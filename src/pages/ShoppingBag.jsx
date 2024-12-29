@@ -4,6 +4,7 @@ import { userId } from "../helpers/static";
 import { useEffect, useState } from "react";
 import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 import AlertDialog from "../components/Dialog";
+import { useNavigate } from "react-router-dom";
 
 function ShoppingBag() {
     
@@ -13,6 +14,8 @@ function ShoppingBag() {
     useEffect(() => {
         dispatch(getBagProducts(userId))
     }, [])
+
+    const navigate = useNavigate()
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -53,7 +56,7 @@ function ShoppingBag() {
     }
 
     const buyItems = (price) => {
-        console.log(price)
+        navigate(`/payments/${userId}`, { state: { totalPrice: price } });
     }
 
     return (
@@ -116,7 +119,7 @@ function ShoppingBag() {
                                             }}
                                         />
                                         <div className="w-[300px] h-max p-[5px] rounded-md border border-slate-200 bg-white flex justify-center">
-                                            <img src={e.product.image} alt={e.product.title} className="h-[200px] rounded-md" />
+                                            <img src={e.product.image} alt={e.product.title} className="h-[200px] rounded-md object-cover" />
                                         </div>
                                         <div className="relative">
                                             <p className="font-bold">${e.product.price}</p>

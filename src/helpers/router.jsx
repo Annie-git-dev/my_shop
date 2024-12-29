@@ -6,6 +6,7 @@ import NoPage from "../pages/NoPage.jsx";
 import Profile from "../pages/Profile.jsx";
 import ShoppingBag from "../pages/ShoppingBag.jsx";
 import WishList from "../pages/WishList.jsx";
+import Payments from "../pages/Payments.jsx";
 
 export const publicRouter = [
   {
@@ -42,6 +43,10 @@ export const privateRouter = [
   {
     path: `${MAIN_URL}wishlist/:id`,
     element: <WishList />
+  },
+  {
+    path: `${MAIN_URL}payments/:id`,
+    element: <Payments />
   },
   {
     path: ERRPAGE_URL,

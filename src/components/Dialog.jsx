@@ -20,7 +20,7 @@ export default function AlertDialog({ selectedItems, removeProducts }) {
     return (
         <>
             <FaRegTrashCan
-                onClick={()=> {
+                onClick={() => {
                     selectedItems.length && handleClickOpen()
                 }}
                 className={`cursor-${selectedItems.length ? 'pointer' : 'no-drop'} ${selectedItems.length ? 'text-[#424242]' : 'text-slate-400'} w-[20px] h-[20px]`}
@@ -28,8 +28,8 @@ export default function AlertDialog({ selectedItems, removeProducts }) {
             <Dialog
                 open={open}
                 onClose={handleClose}
-            // aria-labelledby="alert-dialog-title"
-            // aria-describedby="alert-dialog-description"
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
                     {"Delete selected items"}
@@ -41,7 +41,7 @@ export default function AlertDialog({ selectedItems, removeProducts }) {
                 </DialogContent>
                 <DialogActions>
                     <button className='rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[100px] px-[10px] py-[5px] text-white' onClick={handleClose}>No</button>
-                    <button className='rounded-3xl border-solid bg-[#C70039] border-gray-200 w-[100px] px-[10px] py-[5px] text-white' onClick={() => {
+                    <button className='rounded-3xl border-solid bg-green-800 border-gray-200 w-[100px] px-[10px] py-[5px] text-white' onClick={() => {
                         removeProducts()
                         handleClose()
                     }}>

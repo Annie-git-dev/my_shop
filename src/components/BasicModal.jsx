@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 
 const style = {
   display: 'flex',
+  width: 'max-content',
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -69,7 +70,7 @@ export default function BasicModal({ item }) {
       <img
         src={item.image}
         alt={item.title}
-        className="h-[200px] rounded-md cursor-pointer"
+        className="h-[200px] rounded-md cursor-pointer object-cover"
         onClick={handleOpen} />
       <Modal
         open={open}
@@ -84,9 +85,9 @@ export default function BasicModal({ item }) {
           <img
             src={item.image}
             alt={item.title}
-            className='h-[200px]'
+            className='h-[200px] object-cover'
           />
-          <div className='flex flex-col ml-[20px]'>
+          <div className='flex flex-col ml-[20px] w-[250px]'>
             <div>{item.title}</div>
             <div>${item.price}</div>
             <div>Left {item.rating.count} pcs</div>

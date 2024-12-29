@@ -120,7 +120,7 @@ function Profile() {
                             <div className="flex flex-col mb-4 relative">
                                 <label htmlFor="image" className="flex justify-between items-center cursor-pointer">
                                     <span className="text-gray-700">Uptade your profile photo:</span>
-                                    {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
+                                    {imagePreview !== "" ? <img src={imagePreview} alt="" className="w-[50px] h-[50px] rounded-full object-cover" /> : <RxAvatar className='w-[50px] h-[50px] mr-2 text-[#424242]' />}
                                 </label>
                                 <input
                                     id="image"
