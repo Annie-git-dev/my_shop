@@ -61,7 +61,7 @@ export default function Dashboard() {
     }
 
     const getPurchases = () => {
-        console.log('Show purchases');
+        navigate(`purchases/${userId}`)
     }
 
     const goHomePage = () => {

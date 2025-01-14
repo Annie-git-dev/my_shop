@@ -98,11 +98,11 @@ export default function BasicModal({ item }) {
               <BagProducts item={item} />
               <LikedProducts item={item} />
             </div>
-            <RatingComponent
+            {userId && <RatingComponent
               text="Give your feedback"
               rate={item.rating.rate}
               changeRate={item.rated?.includes(String(userId)) ? handleMessage : handleRateChange}
-            />
+            />}
           </div>
         </Box>
       </Modal>

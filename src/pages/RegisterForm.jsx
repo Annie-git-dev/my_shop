@@ -26,6 +26,7 @@ function RegisterForm() {
             email: yup.string()
                 .required('Email is required')
                 .email('Email must be a valid email address')
+                .matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', 'Wrong format')
                 .test('email-exists', 'Email already exists', (value) => {
                     return !users.some(user => user.email === value);
                 }),
